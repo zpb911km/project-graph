@@ -16,6 +16,7 @@ import { ResizeAble } from "../abstract/StageObjectInterface";
 import { CollisionBox } from "../collisionBox/collisionBox";
 import { Section } from "./Section";
 import { TextNodeRenderer } from "../../../render/canvas2d/entityRenderer/textNode/TextNodeRenderer";
+import { retext } from "../../../../utils/retext";
 
 /**
  *
@@ -81,7 +82,7 @@ export class TextNode extends ConnectableEntity implements ResizeAble {
 
   public set isEditing(value: boolean) {
     this._isEditing = value;
-    TextNodeRenderer.renderTextNode(this);
+    // TextNodeRenderer.renderTextNode(this);
     // 再主动渲染一次，确保即使渲染引擎停止，文字也能显示出来
   }
   isHiddenBySectionCollapse = false;
@@ -141,8 +142,9 @@ export class TextNode extends ConnectableEntity implements ResizeAble {
   //   );
   // }
 
-  rename(text: string) {
-    this.text = text;
+  async rename(text: string) {
+    // this.text = text;
+    this.text = await retext(text);
     // if (this.text.length < TextNode.enableResizeCharCount) {
     //   this.adjustSizeByText();
     // }
